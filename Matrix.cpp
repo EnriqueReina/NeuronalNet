@@ -15,7 +15,7 @@ Matrix::Matrix(int r, int c, bool rand)
 {
 	this->m_x = r;
 	this->m_y = c;
-	
+
 	for(int i = 0; i < this->m_x; i++)
 	{
 		std::vector <double> val;
@@ -29,7 +29,6 @@ Matrix::Matrix(int r, int c, bool rand)
 				val.push_back(r);
 			}
 		}
-		
 		this->m_vals.push_back(val);
 	}
 }
@@ -44,10 +43,11 @@ double Matrix::getValue(int r, int c)
 	return m_vals.at(r).at(c);
 }
 
+
 Matrix *Matrix::transpose()
 {
 	Matrix *m = new Matrix(this->m_y, this->m_x,false);
-	
+
 	for(int i = 0; i < m->m_y; i++)
 	{		
 		for(int j = 0; j < m->m_x; j++)
@@ -55,8 +55,31 @@ Matrix *Matrix::transpose()
 			m->setValue(j,i, this->getValue(i,j));
 		}	
 	}
-	
+
 	return m;
+}
+
+void *Matrix::addMatrix(Matrix matrix)
+{
+	int r = matrix.getNumCol();
+	int c = matrix.getNumRow();
+	
+	if(this->getNumCol() != r || this->getNumRow() != c)
+	{
+		std::cout<<"Lo siento hermano pero no puedo, peaso mierda"<<std::endl;
+	}
+	else
+	{
+		for(int i = 0; i < this->m_x; i++)
+		{		
+			for(int j = 0; j < this-> m_y; j++)
+			{
+				double sum = this->getValue(i,j) + matrix.getValue(i,j);			
+				
+				this->setValue(i,j,sum);
+			}
+		}		
+	}	
 }
 
 void Matrix::print()
