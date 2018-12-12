@@ -38,12 +38,6 @@ void Matrix::setValue(int r, int c, double val)
 	this->m_vals.at(r).at(c) = val;
 }
 
-double Matrix::getValue(int r, int c)
-{
-	return m_vals.at(r).at(c);
-}
-
-
 Matrix *Matrix::transpose()
 {
 	Matrix *m = new Matrix(this->m_y, this->m_x,false);
@@ -82,6 +76,67 @@ void *Matrix::addMatrix(Matrix matrix)
 	}	
 }
 
+
+void *Matrix::subtractMatrix(Matrix matrix)
+{
+	int r = matrix.getNumCol();
+	int c = matrix.getNumRow();
+	
+	if(this->getNumCol() != r || this->getNumRow() != c)
+	{
+		std::cout<<"Matrix has to be of the same order to be able to subtract them"<<std::endl;
+	}
+	else
+	{
+		for(int i = 0; i < this->m_x; i++)
+		{	
+			for(int j = 0; j < this-> m_y; j++)
+			{
+				double sub = this->getValue(i,j) - matrix.getValue(i,j);			
+				
+				this->setValue(i,j,sub);
+			}
+		}		
+	}	
+}
+
+void *Matrix::multiply(double x)
+{
+	
+	for(int j = 0; j < this-> m_y; j++)	
+	{		
+		for(int i = 0; i < this->m_x; i++)
+		{
+			double mult = this->getValue(i,j) * x;			
+				
+			this->setValue(i,j,mult);
+		}
+	}		
+}
+
+Matrix *Matrix::dotProduct(Matrix matrix)
+{
+	int r = matrix.getNumCol();
+	int c = matrix.getNumRow();
+	
+	Matrix *m = new Matrix(this->m_x, c,false);
+	
+	double mult = 0.0;
+	
+	if(this->getNumCol() != r)
+	{
+		std::cout<<"Cannot realize de dotProduct due to differences between the cols and rows of the matrixes"<<std::endl;
+		return m;
+	}
+	else
+	{
+		
+    }
+		
+		return m;	
+}
+
+
 void Matrix::print()
 {
 	for(int i = 0; i < m_x; i++)
@@ -93,4 +148,3 @@ void Matrix::print()
 		std::cout<<std::endl;	
 	}
 }
-
